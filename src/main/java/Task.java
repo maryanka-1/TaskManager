@@ -1,7 +1,3 @@
-import java.util.HashMap;
-import java.util.List;
-
-
 public class Task {
 
     private String name;
@@ -12,20 +8,7 @@ public class Task {
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        id = Manager.setId(Manager.getId());
         this.status = Status.NEW;
-    }
-    public Task(String name, String description, Integer id, Status status) {
-        this.name = name;
-        this.description = description;
-        this.id = id;
-        if(status == Status.NEW) {
-            this.status = Status.IN_PROGRESS;
-        } else this.status = Status.DONE;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getName() {
@@ -36,8 +19,28 @@ public class Task {
         return description;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public Status getStatus() {
         return status;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
