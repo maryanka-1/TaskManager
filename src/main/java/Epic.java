@@ -1,21 +1,21 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
 
 
-    private Map<Integer,Subtask> subtasksEpic = new HashMap<>();
+    private final List<Integer> subtaskId = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
     }
 
-    public Map<Integer, Subtask> getSubtask() {
-        return subtasksEpic;
+    public List<Integer> getSubtask() {
+        return subtaskId;
     }
 
-    public void setSubtasksEpic(Subtask subtaskEpic) {
-        subtasksEpic.put(subtaskEpic.getId(),subtaskEpic);
+    public void setSubtaskId(Subtask subtask) {
+        subtaskId.add(subtask.getId());
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Epic extends Task {
                 ", name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", status=" + getStatus() +
-                ", subtasksEpic=" + subtasksEpic +
+                ", subtasksEpic=" + subtaskId +
                 '\'';
     }
 }
