@@ -1,11 +1,12 @@
 import java.util.*;
 
-public class InMemoryTaskManager implements TaskManager{
+public class InMemoryTaskManager implements TaskManager {
     private int id = 1;
     public Map<Integer, Task> tasks = new HashMap<>();
     public Map<Integer, Subtask> subtasks = new HashMap<>();
     public Map<Integer, Epic> epics = new HashMap<>();
     public final HistoryManager historyManager;
+
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
     }
@@ -42,29 +43,26 @@ public class InMemoryTaskManager implements TaskManager{
 
     @Override
     public void clearTasks() {
-        for(Task task: tasks.values()){
-            historyManager.remove(task.getId());
-        }
+        tasks.keySet()
+                .forEach(id -> historyManager.remove(id));
         tasks.clear();
     }
 
     @Override
     public void clearSubtasks() {
-        for(Task task: subtasks.values()){
-            historyManager.remove(task.getId());
-        }
+        subtasks.keySet()
+                .forEach(id -> historyManager.remove(id));
+
         subtasks.clear();
     }
 
     @Override
     public void clearEpics() {
-        for(Task task: subtasks.values()){
-            historyManager.remove(task.getId());
-        }
+        subtasks.keySet()
+                .forEach(id -> historyManager.remove(id));
         subtasks.clear();
-        for(Task task: epics.values()){
-            historyManager.remove(task.getId());
-        }
+        epics.keySet()
+                .forEach(id -> historyManager.remove(id));
         epics.clear();
     }
 
@@ -115,11 +113,10 @@ public class InMemoryTaskManager implements TaskManager{
 
     @Override
     public void removeEpic(int id) {
-        List<Integer> forRemove = epics.get(id).getSubtask();
-        for (Integer i : forRemove) {
+        epics.get(id).getSubtask().forEach(i -> {
             removeSubtask(i);
             historyManager.remove(i);
-        }
+        });
         historyManager.remove(id);
         epics.remove(id);
     }

@@ -17,7 +17,6 @@ public class Main {
         Epic sEpic = new Epic("Cook", "Cook dishes for dinner");
         manager.add(sEpic);
 
-
         manager.getEpic(3);
         System.out.println(manager.historyManager.getHistory());
         manager.getTask(2);
@@ -30,11 +29,8 @@ public class Main {
         System.out.println(manager.historyManager.getHistory());
         manager.getSubtask(6);
         System.out.println(manager.historyManager.getHistory());
-
         manager.removeEpic(3);
-
         manager.getTask(1);
         System.out.println(manager.historyManager.getHistory());
-
     }
 }
