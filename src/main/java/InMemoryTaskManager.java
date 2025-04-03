@@ -1,11 +1,12 @@
 import java.util.*;
 
-public class InMemoryTaskManager implements TaskManager{
+public class InMemoryTaskManager implements TaskManager {
     private int id = 1;
     public Map<Integer, Task> tasks = new HashMap<>();
     public Map<Integer, Subtask> subtasks = new HashMap<>();
     public Map<Integer, Epic> epics = new HashMap<>();
     public final HistoryManager historyManager;
+
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
     }
@@ -37,21 +38,31 @@ public class InMemoryTaskManager implements TaskManager{
         tasks.clear();
         epics.clear();
         subtasks.clear();
+        historyManager.removeAll();
     }
 
     @Override
     public void clearTasks() {
+        tasks.keySet()
+                .forEach(id -> historyManager.remove(id));
         tasks.clear();
     }
 
     @Override
     public void clearSubtasks() {
+        subtasks.keySet()
+                .forEach(id -> historyManager.remove(id));
+
         subtasks.clear();
     }
 
     @Override
     public void clearEpics() {
+        subtasks.keySet()
+                .forEach(id -> historyManager.remove(id));
         subtasks.clear();
+        epics.keySet()
+                .forEach(id -> historyManager.remove(id));
         epics.clear();
     }
 
@@ -91,19 +102,22 @@ public class InMemoryTaskManager implements TaskManager{
     @Override
     public void removeTask(int id) {
         tasks.remove(id);
+        historyManager.remove(id);
     }
 
     @Override
     public void removeSubtask(int id) {
         subtasks.remove(id);
+        historyManager.remove(id);
     }
 
     @Override
     public void removeEpic(int id) {
-        List<Integer> forRemove = epics.get(id).getSubtask();
-        for (Integer i : forRemove) {
+        epics.get(id).getSubtask().forEach(i -> {
             removeSubtask(i);
-        }
+            historyManager.remove(i);
+        });
+        historyManager.remove(id);
         epics.remove(id);
     }
 

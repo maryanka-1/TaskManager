@@ -12,62 +12,25 @@ public class Main {
         manager.add(tablecloth);
         Subtask plate = new Subtask("Plates", "arrange the plates", fEpic.getId());
         manager.add(plate);
+        Subtask salad = new Subtask("Clear", "Clear room", fEpic.getId());
+        manager.add(salad);
         Epic sEpic = new Epic("Cook", "Cook dishes for dinner");
         manager.add(sEpic);
-        Subtask salad = new Subtask("Salad", "cut salad ingredients", sEpic.getId());
-        manager.add(salad);
 
-        System.out.println("All tasks: " + manager.tasks);
-        System.out.println("All epics: " + manager.epics);
-        System.out.println("All subtasks: " + manager.subtasks);
-
-        Task newTask = new Task("Buy onion", "Buy red onion");
-        newTask.setId(first.getId());
-        newTask.setStatus(Status.IN_PROGRESS);
-        manager.updateTask(newTask);
-
-        Subtask newSubtask = new Subtask("Tablecloth", "Cover the table with a tablecloth", fEpic.getId());
-        newSubtask.setId(tablecloth.getId());
-        newSubtask.setStatus(Status.DONE);
-        manager.updateTask(newSubtask);
-
-        Subtask next = plate;
-        next.setStatus(Status.DONE);
-        manager.updateTask(next);
-
-        System.out.println("After update: ");
-        System.out.println("\nAll tasks: " + manager.tasks);
-        System.out.println("All epics: " + manager.epics);
-        System.out.println("All subtasks: " + manager.subtasks);
-
-        manager.removeTask(first.getId());
-        manager.removeEpic(fEpic.getId());
-        manager.getEpic(6);
+        manager.getEpic(3);
         System.out.println(manager.historyManager.getHistory());
         manager.getTask(2);
         System.out.println(manager.historyManager.getHistory());
-        manager.getSubtask(7);
+        manager.getEpic(3);
         System.out.println(manager.historyManager.getHistory());
-        manager.getTask(2);
+        manager.getSubtask(4);
         System.out.println(manager.historyManager.getHistory());
-        manager.getTask(2);
+        manager.getSubtask(5);
         System.out.println(manager.historyManager.getHistory());
-        manager.getTask(7);
+        manager.getSubtask(6);
         System.out.println(manager.historyManager.getHistory());
-        manager.getTask(2);
+        manager.removeEpic(3);
+        manager.getTask(1);
         System.out.println(manager.historyManager.getHistory());
-        manager.getTask(2);
-        System.out.println(manager.historyManager.getHistory());
-        manager.getTask(6);
-        System.out.println(manager.historyManager.getHistory());
-        manager.getTask(2);
-        System.out.println(manager.historyManager.getHistory());
-        manager.getSubtask(7);
-        System.out.println("After update: ");
-        System.out.println("\nAll tasks: " + manager.tasks);
-        System.out.println("All epics: " + manager.epics);
-        System.out.println("All subtasks: " + manager.subtasks);
-        System.out.println(manager.historyManager.getHistory());
-
     }
 }
