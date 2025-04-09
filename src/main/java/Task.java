@@ -4,11 +4,13 @@ public class Task {
     private String description;
     private Integer id;
     private Status status;
+    TypeTask type;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
+        this.type = TypeTask.TASK;
     }
 
     public String getName() {
@@ -21,6 +23,10 @@ public class Task {
 
     public Integer getId() {
         return id;
+    }
+
+    public TypeTask getType() {
+        return type;
     }
 
     public Status getStatus() {
@@ -41,6 +47,10 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void setType(TypeTask type) {
+        this.type = type;
     }
 
     @Override
