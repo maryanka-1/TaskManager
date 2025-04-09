@@ -1,0 +1,7 @@
+id,type,name,status,description,idEpic
+1,TASK,Buy products,NEW,Buy all products from list,
+2,TASK,invite guests,NEW,Sent messeges to guests,
+7,EPIC,Cook,NEW,Cook dishes for dinner,
+8,SUBTASK,Salad,NEW,Cook a salad,7
+
+2,1,8

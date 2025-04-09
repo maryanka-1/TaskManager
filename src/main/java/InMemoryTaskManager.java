@@ -1,6 +1,8 @@
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
+
+
     private int id = 1;
     public Map<Integer, Task> tasks = new HashMap<>();
     public Map<Integer, Subtask> subtasks = new HashMap<>();
@@ -9,6 +11,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
