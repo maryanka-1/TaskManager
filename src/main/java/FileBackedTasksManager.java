@@ -171,18 +171,24 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     private Task fromString(String value) {
         String[] arrayForCreateTask = value.split(",");
         Task result = null;
-        if (arrayForCreateTask[1].equals("SUBTASK")) {
-            result = new Subtask(arrayForCreateTask[2], arrayForCreateTask[4], Integer.parseInt(arrayForCreateTask[5]));
-            result.setType(TypeTask.SUBTASK);
-        } else if (arrayForCreateTask[1].equals("TASK")) {
-            result = new Task(arrayForCreateTask[2], arrayForCreateTask[4]);
-            result.setType(TypeTask.TASK);
-        } else {
-            result = new Epic(arrayForCreateTask[2], arrayForCreateTask[4]);
-            result.setType(TypeTask.EPIC);
+        switch (arrayForCreateTask[1]){
+            case "SUBTASK":
+                result = new Subtask(arrayForCreateTask[2], arrayForCreateTask[4], Integer.parseInt(arrayForCreateTask[5]));
+                result.setType(TypeTask.SUBTASK);
+                break;
+            case "TASK":
+                result = new Task(arrayForCreateTask[2], arrayForCreateTask[4]);
+                result.setType(TypeTask.TASK);
+                break;
+            case "EPIC":
+                result = new Epic(arrayForCreateTask[2], arrayForCreateTask[4]);
+                result.setType(TypeTask.EPIC);
+                break;
+            default:
+                System.out.println("Некорректный тип строки");
         }
-        result.setStatus(Status.valueOf(arrayForCreateTask[3]));
-        result.setId(Integer.parseInt(arrayForCreateTask[0]));
+            result.setStatus(Status.valueOf(arrayForCreateTask[3]));
+            result.setId(Integer.parseInt(arrayForCreateTask[0]));
         return result;
     }
 
@@ -196,25 +202,22 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public static FileBackedTasksManager loadFromFile(String file) throws FileNotFoundException {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(Managers.getDefaultHistory(), "newFile.csv");
-        Path path = Paths.get(file);
-        if (Files.notExists(path)) {
-            throw new FileNotFoundException("Файл не найден: " + file);
-        }
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             int idMax = 0;
             while ((line = br.readLine()) != null) {
                 if (!line.isEmpty()) {
                     String[] arrayLine = line.split(",");
-                    if (arrayLine[1].equals("TASK") ||
-                            arrayLine[1].equals("EPIC") ||
-                            arrayLine[1].equals("SUBTASK")) {
+                    String tmp = arrayLine[1];
+                    if (tmp.equals("TASK") ||
+                            tmp.equals("EPIC") ||
+                            tmp.equals("SUBTASK")) {
                         int idTask = Integer.parseInt(arrayLine[0]);
                         if (idMax < idTask) {
                             idMax = idTask;
                         }
                         fileBackedTasksManager.setId(idTask);
-                        switch (arrayLine[1]) {
+                        switch (tmp) {
                             case "TASK":
                                 fileBackedTasksManager.add(fileBackedTasksManager.fromString(line));
                                 break;
@@ -241,8 +244,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка чтения файла" + e.getMessage());
+        }
+        catch (IOException e) {
+            fileBackedTasksManager.save();
         }
         return fileBackedTasksManager;
     }
