@@ -1,6 +1,6 @@
 id,type,name,status,description,idEpic
-1,TASK,Buy products,NEW,Buy all products from list,
-2,TASK,invite guests,NEW,Sent messeges to guests,
+1,TASK,Buy products,NEW,Buy all products from list,2025-05-01T09:00,15,
+2,TASK,invite guests,NEW,Sent messeges to guests,2025-05-01T11:30,15,
 7,EPIC,Cook,NEW,Cook dishes for dinner,
 
 2,1
