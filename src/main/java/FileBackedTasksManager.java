@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -149,6 +150,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         result.append(task.getName()).append(",");
         result.append(task.getStatus()).append(",");
         result.append(task.getDescription()).append(",");
+        if (task.getStartTime() != null && task.getClass() != Epic.class) {
+            result.append(task.getStartTime()).append(",");
+        }
+        if(task.getDuration() != null && task.getClass() != Epic.class) {
+            result.append(task.getDuration()).append(",");
+        }
         if (task.getClass() == Subtask.class) {
             Subtask subtask = (Subtask) task;
             result.append(subtask.getEpicId()).append("\n");
@@ -173,11 +180,18 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         Task result = null;
         switch (arrayForCreateTask[1]){
             case "SUBTASK":
-                result = new Subtask(arrayForCreateTask[2], arrayForCreateTask[4], Integer.parseInt(arrayForCreateTask[5]));
+                result = new Subtask(arrayForCreateTask[2],
+                        arrayForCreateTask[4],
+                        LocalDateTime.parse(arrayForCreateTask[5]),
+                        Integer.parseInt(arrayForCreateTask[6]),
+                        Integer.parseInt(arrayForCreateTask[7]));
                 result.setType(TypeTask.SUBTASK);
                 break;
             case "TASK":
-                result = new Task(arrayForCreateTask[2], arrayForCreateTask[4]);
+                result = new Task(arrayForCreateTask[2],
+                        arrayForCreateTask[4],
+                        LocalDateTime.parse(arrayForCreateTask[5]),
+                        Integer.parseInt(arrayForCreateTask[6]));
                 result.setType(TypeTask.TASK);
                 break;
             case "EPIC":
@@ -244,10 +258,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     }
                 }
             }
+            idMax++;
+            fileBackedTasksManager.setCounterId(idMax);
         }
         catch (IOException e) {
             fileBackedTasksManager.save();
         }
+        fileBackedTasksManager.save();
         return fileBackedTasksManager;
     }
 }

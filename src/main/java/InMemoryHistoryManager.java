@@ -15,10 +15,12 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public ArrayList<Task> getHistory() {
         ArrayList<Task> result = new ArrayList<>();
-        Node<Task> temp = history.head;
-        for (int i = 0; i < history.size; i++) {
-            result.add(temp.value);
-            temp = temp.next;
+        if (history != null) {
+            Node<Task> temp = history.head;
+            for (int i = 0; i < history.size; i++) {
+                result.add(temp.value);
+                temp = temp.next;
+            }
         }
         return result;
     }

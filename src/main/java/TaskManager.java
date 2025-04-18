@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface TaskManager {
 
@@ -42,6 +43,8 @@ public interface TaskManager {
     public void updateTask(Subtask subtask);
 
     public List<Integer> getSubtasksEpic(Epic epic);
+
+    public Set<Task> getPrioritizedTasks();
 }
 
 
